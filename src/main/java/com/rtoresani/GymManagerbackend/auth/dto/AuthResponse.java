@@ -1,4 +1,4 @@
-package com.rtoresani.GymManagerbackend.auth.jwt.dto;
+package com.rtoresani.GymManagerbackend.auth.dto;
 
 
 import com.rtoresani.GymManagerbackend.models.ERole;

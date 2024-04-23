@@ -1,9 +1,9 @@
 package com.rtoresani.GymManagerbackend.auth;
 
 
-import com.rtoresani.GymManagerbackend.auth.jwt.dto.AuthResponse;
-import com.rtoresani.GymManagerbackend.auth.jwt.dto.LoginRequest;
-import com.rtoresani.GymManagerbackend.auth.jwt.dto.RegisterRequest;
+import com.rtoresani.GymManagerbackend.auth.dto.AuthResponse;
+import com.rtoresani.GymManagerbackend.auth.dto.LoginRequest;
+import com.rtoresani.GymManagerbackend.auth.dto.RegisterRequest;
 import jakarta.validation.Valid;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = ErrorResponse
                 .builder()
                 .dateTime(LocalDateTime.now())
-                .message("Credenciales invalidas. Ingrese un nombre de usuario y contraseña válidos.")
+                .message("Credenciales invalidas. Ingrese un correo electrónico y contraseña válidos.")
                 .url(webRequest.getDescription(false).replace("uri=", ""))
                 .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);

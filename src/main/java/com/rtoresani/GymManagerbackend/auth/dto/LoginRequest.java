@@ -1,4 +1,4 @@
-package com.rtoresani.GymManagerbackend.auth.jwt.dto;
+package com.rtoresani.GymManagerbackend.auth.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;

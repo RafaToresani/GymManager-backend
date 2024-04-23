@@ -1,9 +1,9 @@
 package com.rtoresani.GymManagerbackend.auth;
 
 
-import com.rtoresani.GymManagerbackend.auth.jwt.dto.AuthResponse;
-import com.rtoresani.GymManagerbackend.auth.jwt.dto.LoginRequest;
-import com.rtoresani.GymManagerbackend.auth.jwt.dto.RegisterRequest;
+import com.rtoresani.GymManagerbackend.auth.dto.AuthResponse;
+import com.rtoresani.GymManagerbackend.auth.dto.LoginRequest;
+import com.rtoresani.GymManagerbackend.auth.dto.RegisterRequest;
 import com.rtoresani.GymManagerbackend.auth.jwt.JwtService;
 import com.rtoresani.GymManagerbackend.exceptions.ResourceAlreadyExistException;
 import com.rtoresani.GymManagerbackend.models.ERole;
