@@ -115,6 +115,7 @@ public class GymController {
         service.deleteById(id);
         return new ResponseEntity<>(SuccessResponse
                 .builder()
+                .statusCode("200")
                 .message("Eliminación exitosa.")
                 .url(url+"/"+id)
                 .build(), HttpStatus.OK);

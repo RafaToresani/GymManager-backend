@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,7 +73,7 @@ public class GymService {
                 .title(request.getTitle())
                 .gymData(gymData)
                 .isActive(true)
-                //Attendence
+                .attendances(new HashSet<>())
                 .build();
         return gymRepository.save(gym);
     }
