@@ -44,6 +44,17 @@ public class GlobalExceptionHandler {
                 .message("Credenciales invalidas. Ingrese un correo electrónico y contraseña válidos.")
                 .url(webRequest.getDescription(false).replace("uri=", ""))
                 .build();
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handlerResourceNotFoundException(ResourceNotFoundException ex, WebRequest webRequest){
+        ErrorResponse errorResponse = ErrorResponse
+                .builder()
+                .dateTime(LocalDateTime.now())
+                .message(ex.getMessage())
+                .url(webRequest.getDescription(false).replace("uri=", ""))
+                .build();
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 }

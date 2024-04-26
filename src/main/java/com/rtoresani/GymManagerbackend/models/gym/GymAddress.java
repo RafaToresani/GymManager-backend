@@ -1,4 +1,4 @@
-package com.rtoresani.GymManagerbackend.models;
+package com.rtoresani.GymManagerbackend.models.gym;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -10,8 +10,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "USER_ADRRESSES")
-public class UserAddress {
+@Table(name = "GYM_ADDRESSES")
+public class GymAddress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,7 +20,7 @@ public class UserAddress {
     private String city;
     private Double postalCode;
 
-    @OneToOne(mappedBy = "address")
+    @OneToOne(mappedBy = "gymAddress")
     @JsonIgnore
-    private UserData userData;
+    private GymData gymData;
 }

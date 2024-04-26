@@ -1,6 +1,6 @@
 package com.rtoresani.GymManagerbackend.repositories.user;
 
-import com.rtoresani.GymManagerbackend.models.UserAddress;
+import com.rtoresani.GymManagerbackend.models.user.UserAddress;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

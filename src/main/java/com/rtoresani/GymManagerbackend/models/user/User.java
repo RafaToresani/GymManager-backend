@@ -1,4 +1,4 @@
-package com.rtoresani.GymManagerbackend.models;
+package com.rtoresani.GymManagerbackend.models.user;
 
 import jakarta.persistence.*;
 import lombok.*;

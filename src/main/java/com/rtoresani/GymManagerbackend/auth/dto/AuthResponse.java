@@ -1,7 +1,7 @@
 package com.rtoresani.GymManagerbackend.auth.dto;
 
 
-import com.rtoresani.GymManagerbackend.models.ERole;
+import com.rtoresani.GymManagerbackend.models.user.ERole;
 import lombok.*;
 
 @Getter
