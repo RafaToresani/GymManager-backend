@@ -13,6 +13,10 @@ import com.rtoresani.GymManagerbackend.repositories.gym.GymAddressRepository;
 import com.rtoresani.GymManagerbackend.repositories.gym.GymDataRepository;
 import com.rtoresani.GymManagerbackend.repositories.gym.GymRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -79,15 +83,15 @@ public class GymService {
     }
 
     // ============================== GET ==============================
-    /*Busca y retorna la lista completa de gimnasios*/
-    public List<GymResponse> findAll(){
-        List<Gym> gyms = this.gymRepository.findAll();
+    /*Busca y retorna la lista completa de gimnasios paginados*/
+    public Page<GymResponse> findAllPageable(int page, int size){
+        Page<Gym> gyms = this.gymRepository.findAll(PageRequest.of(page, size));
         if(gyms.isEmpty()) throw new ResourceNotFoundException("gimnasio");
         List<GymResponse> gymResponses = new ArrayList<>();
         for(Gym gym: gyms){
             gymResponses.add(Mapper.mapToResponse(gym));
         }
-        return gymResponses;
+        return new PageImpl<>(gymResponses, gyms.getPageable(), gyms.getTotalElements());
     }
 
     /*Busca y retorna un gimnasio por id*/

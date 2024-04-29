@@ -9,15 +9,18 @@ import com.rtoresani.GymManagerbackend.exceptions.ResourceNotFoundException;
 import com.rtoresani.GymManagerbackend.models.client.Client;
 import com.rtoresani.GymManagerbackend.models.client.ClientAddress;
 import com.rtoresani.GymManagerbackend.models.client.ClientData;
+import com.rtoresani.GymManagerbackend.models.membership.Membership;
 import com.rtoresani.GymManagerbackend.repositories.client.ClientAddressRepository;
 import com.rtoresani.GymManagerbackend.repositories.client.ClientDataRepository;
 import com.rtoresani.GymManagerbackend.repositories.client.ClientRepository;
+import com.rtoresani.GymManagerbackend.repositories.membership.MembershipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -32,6 +35,8 @@ public class ClientService {
     private ClientDataRepository clientDataRepository;
     @Autowired
     private ClientAddressRepository clientAddressRepository;
+    @Autowired
+    private MembershipRepository membershipRepository;
 
 
     // ============================== POST ==============================
@@ -44,7 +49,7 @@ public class ClientService {
         ClientData data = createClientData(request, address);
         Client client = createClientEntity(request, data);
 
-        return Mapper.mapToResponse(client);
+        return this.createClientResponse(client);
     }
 
     private Client createClientEntity(ClientRequest request, ClientData data) {
@@ -87,12 +92,11 @@ public class ClientService {
     /*Busca y retorna todos los clientes paginados.*/
     public Page<ClientResponse> findAllPageable(int page, int size){
         Page<Client> clients = this.clientRepository.findAll(PageRequest.of(page, size));
-
         if(clients.isEmpty()) throw new ResourceNotFoundException("cliente");
 
         List<ClientResponse> clientResponses = new ArrayList<>();
         for (Client client : clients.getContent()) {
-            clientResponses.add(Mapper.mapToResponse(client));
+            clientResponses.add(this.createClientResponse(client));
         }
 
         return new PageImpl<>(clientResponses, clients.getPageable(), clients.getTotalElements());
@@ -103,7 +107,7 @@ public class ClientService {
         Optional<Client> client = this.clientRepository.findById(id);
         if(client.isEmpty()) throw new ResourceNotFoundException("cliente", "id", id.toString());
 
-        return Mapper.mapToResponse(client.get());
+        return this.createClientResponse(client.get());
     }
 
     /*Busca y retorna un cliente en base a su dni*/
@@ -111,7 +115,7 @@ public class ClientService {
         Optional<Client> client = this.clientRepository.findByClientDataDni(dni);
         if(client.isEmpty()) throw new ResourceNotFoundException("cliente", "dni", dni);
 
-        return Mapper.mapToResponse(client.get());
+        return this.createClientResponse(client.get());
     }
 
     // ============================== PATCH ==============================
@@ -131,7 +135,7 @@ public class ClientService {
         updated.getClientData().getClientAddress().setNumber(request.getNumber());
         updated.getClientData().getClientAddress().setPostalCode(request.getPostalCode());
 
-        return Mapper.mapToResponse(this.clientRepository.save(updated));
+        return this.createClientResponse(this.clientRepository.save(updated));
     }
 
 
@@ -139,5 +143,21 @@ public class ClientService {
         Optional<Client> client = this.clientRepository.findById(id);
         if(client.isEmpty()) throw new ResourceNotFoundException("cliente", "id", id.toString());
         this.clientRepository.deleteById(id);
+    }
+
+
+
+    private ClientResponse createClientResponse(Client client){
+        Optional<Membership> membership = this.membershipRepository.findFirstByClientIdAndStatusTrueAndEndingDateAfterOrderByEndingDateDesc(client.getId(), LocalDate.now());
+
+        if(membership.isEmpty()){
+            membership = this.membershipRepository.findFirstByClientIdAndStatusFalseAndEndingDateAfterOrderByEndingDateAsc(client.getId(),  LocalDate.now());
+        }
+
+        if(membership.isEmpty()){
+            return Mapper.mapToResponse(client, null);
+        }else{
+            return Mapper.mapToResponse(client, membership.get());
+        }
     }
 }

@@ -2,12 +2,9 @@ package com.rtoresani.GymManagerbackend.controllers;
 
 import com.rtoresani.GymManagerbackend.dto.request.ClientRequest;
 import com.rtoresani.GymManagerbackend.dto.responses.ClientResponse;
-import com.rtoresani.GymManagerbackend.dto.responses.GymResponse;
 import com.rtoresani.GymManagerbackend.dto.responses.SuccessResponse;
-import com.rtoresani.GymManagerbackend.models.client.Client;
 import com.rtoresani.GymManagerbackend.services.ClientService;
 import jakarta.validation.Valid;
-import jdk.jshell.execution.Util;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -93,8 +90,8 @@ public class ClientController {
                 .build(), HttpStatus.CREATED);
     }
 
-    // ============================== PATCH ==============================
-    @PatchMapping("/{id}")
+    // ============================== PUT ==============================
+    @PutMapping("/{id}")
     public ResponseEntity<SuccessResponse> updateClient(@PathVariable Long id, @Valid @RequestBody ClientRequest request, BindingResult bindingResult) throws BadRequestException {
         Utils.checkId(id, "cliente");
 

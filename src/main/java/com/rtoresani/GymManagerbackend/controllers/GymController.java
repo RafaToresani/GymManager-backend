@@ -7,6 +7,7 @@ import com.rtoresani.GymManagerbackend.dto.responses.SuccessResponse;
 import com.rtoresani.GymManagerbackend.services.GymService;
 import jakarta.validation.Valid;
 import org.apache.coyote.BadRequestException;
+import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,8 +50,11 @@ public class GymController {
     // ============================== GET ==============================
     /*Busca y retorna la lista de gimnasios.*/
     @GetMapping
-    public ResponseEntity<SuccessResponse> findAll(){
-        List<GymResponse> gyms= this.service.findAll();
+    public ResponseEntity<SuccessResponse> findAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ){
+        Page<GymResponse> gyms= this.service.findAllPageable(page, size);
 
         return new ResponseEntity<>(SuccessResponse
                 .builder()

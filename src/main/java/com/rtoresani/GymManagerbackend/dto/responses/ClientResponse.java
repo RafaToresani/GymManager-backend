@@ -2,6 +2,8 @@ package com.rtoresani.GymManagerbackend.dto.responses;
 
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,4 +20,8 @@ public class ClientResponse {
     private String number;
     private Double postalCode;
     private String phoneNumber;
+
+    private Long membershipId;
+    private LocalDate endingDate;
+    private Boolean status;
 }
